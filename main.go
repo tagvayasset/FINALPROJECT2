@@ -24,42 +24,6 @@ func main() {
 	defer db.Close()
 
 	http.HandleFunc("/users", jwtMiddleware(UsersHandler(db), "admin"))
-	// http.HandleFunc("/login", jwtMiddleware(LoginHandler(db), "customer", "admin"))
-
-	// http.HandleFunc("/users", jwtMiddleware(func(w http.ResponseWriter, r *http.Request) {
-	// 	if r.Method == http.MethodGet {
-	// 		rows, err := db.Query("SELECT * FROM users")
-	// 		if err != nil {
-	// 			http.Error(w, err.Error(), http.StatusInternalServerError)
-	// 			return
-	// 		}
-	// 		defer rows.Close()
-
-	// 		var users []string
-	// 		for rows.Next() {
-	// 			var user_id string
-	// 			var username string
-	// 			var password string
-	// 			var role string
-	// 			if err := rows.Scan(&user_id, &username, &password, &role); err != nil {
-	// 				http.Error(w, err.Error(), http.StatusInternalServerError)
-	// 				return
-	// 			}
-	// 			users = append(users, fmt.Sprintf("user_id: %s, username: %s, password: %s, role: %s", user_id, username, password, role))
-	// 		}
-
-	// 		if err := rows.Err(); err != nil {
-	// 			http.Error(w, err.Error(), http.StatusInternalServerError)
-	// 			return
-	// 		}
-
-	// 		w.Header().Set("Content-Type", "application/json")
-	// 		json.NewEncoder(w).Encode(users)
-	// 	} else {
-	// 		// Respond with method not allowed error
-	// 		w.WriteHeader(http.StatusMethodNotAllowed)
-	// 	}
-	// }, "admin"))
 
 	http.HandleFunc("/login", func(w http.ResponseWriter, r *http.Request) {
 		if r.Method == http.MethodPost {
